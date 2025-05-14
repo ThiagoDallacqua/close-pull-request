@@ -36,8 +36,10 @@ const run = async () => {
       body
     });
   }
+  core.infor("issue/PR number", context.issue.number);
+  core.infor("issue/PR number", context.payload.self.href);
   core.info("Updating the state of the provided pull request to closed");
-  const PRNumber = context.payload.pull_request || context.issue.number;
+  const PRNumber = context.issue.number || context.payload.self.href.split("/").pop();
   await client.pulls.update({
     ...context.repo,
     pull_number: PRNumber,
