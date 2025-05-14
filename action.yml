@@ -1,6 +1,6 @@
-name: "Close Pull Request"
+name: "Close Active Pull Request"
 description: "A GitHub action to automatically close a pull request."
-author: "Kazuki Suda"
+author: "Thiago Dallacqua - based on the work from Kazuki Suda"
 inputs:
   comment:
     description: "Post a issue comment just before closing a pull request."
