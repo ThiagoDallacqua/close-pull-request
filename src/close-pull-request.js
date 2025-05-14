@@ -26,8 +26,6 @@ export const run = async () => {
       body,
     });
   }
-  core.info("issue/PR number", context.issue.number);
-  core.info("issue/PR number", context.payload?.self?.href);
   core.info("Updating the state of the provided pull request to closed");
   const PRNumber = context.issue.number;
   await client.pulls.update({
@@ -36,5 +34,8 @@ export const run = async () => {
     state: "closed",
   });
 
-  core.info(`Closed a pull request ${PRNumber}`);
+  const wrappingComment = `Closed the pull request ${PRNumber}${
+    body.length > 0 ? ", see generated comment for more info." : "."
+  }`;
+  core.info(wrappingComment);
 };
