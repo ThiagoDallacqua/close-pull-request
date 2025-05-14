@@ -26,8 +26,8 @@ export const run = async () => {
       body,
     });
   }
-  core.infor("issue/PR number", context.issue.number);
-  core.infor("issue/PR number", context.payload.self.href);
+  core.info("issue/PR number", context.issue.number);
+  core.info("issue/PR number", context.payload.self.href);
   core.info("Updating the state of the provided pull request to closed");
   const PRNumber =
     context.issue.number || context.payload.self.href.split("/").pop();
