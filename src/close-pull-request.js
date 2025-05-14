@@ -1,12 +1,8 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import * as errors from "./errors";
 
 export const run = async () => {
   const context = github.context;
-  if (context.eventName !== "pull_request_target") {
-    throw errors.ignoreEvent;
-  }
 
   let token = process.env["GITHUB_TOKEN"] || "";
   if (token === "") {
@@ -31,12 +27,13 @@ export const run = async () => {
     });
   }
 
-  core.info("Updating the state of a pull request to closed");
+  core.info("Updating the state of the provided pull request to closed");
+  const PRNumber = context.payload.pull_request || context.issue.number;
   await client.pulls.update({
     ...context.repo,
-    pull_number: context.issue.number,
+    pull_number: PRNumber,
     state: "closed",
   });
 
-  core.info(`Closed a pull request ${context.issue.number}`);
+  core.info(`Closed a pull request ${PRNumber}`);
 };
